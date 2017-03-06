@@ -86,3 +86,4 @@ sent on behalf of can be configured in the node or, if left blank, can be set by
 the `msg.deviceType` and `msg.deviceId` properties. If these properties are not
 provided, either in the node or the message, it will use the type and id of the
 Gateway itself.
+=======
