@@ -23,9 +23,6 @@ module.exports = function(RED) {
         var connections = {};
         return {
             getClient: function(node,config,isGateway,cleanSession,keepAlive,qos,callback) {
-                if(config['mqtt-server'] === "") {
-                    config['mqtt-server'] = config.org + ".messaging.internetofthings.ibmcloud.com";
-                }
                 var nodeId = node.id;
                 var key = JSON.stringify(config);
                 if (!connections[key]) {
@@ -133,6 +130,7 @@ module.exports = function(RED) {
         this.config['auth-token']);
         this.config.keepalive = n.keepalive;
         this.config.cleansession = n.cleansession;
+        this.config['use-client-certs'] = n.usetls;
 
         var node = this;
         this.on('close', function() {
@@ -149,6 +147,18 @@ module.exports = function(RED) {
 
         if (typeof this.config.cleansession === 'undefined') {
             this.config.cleansession = true;
+        }
+
+        if(this.config['mqtt-server'] === '') {
+            this.config['mqtt-server'] = this.config.org + ".messaging.internetofthings.ibmcloud.com";
+        }
+
+        if(n.usetls === true){
+                var tlsNode = RED.nodes.getNode(n.tls);
+                this.config['read-certs'] = true;
+                this.config['client-ca'] = tlsNode.ca;
+                this.config['client-cert'] = tlsNode.cert;
+                this.config['client-key'] = tlsNode.key;
         }
 
     }
