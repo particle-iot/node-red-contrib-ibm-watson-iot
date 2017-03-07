@@ -22,7 +22,7 @@ Supported Features
 | Device connectivity |  &#10004; |
 | Gateway connectivity |    &#10004; |
 | SSL/TLS | &#10004; |
-| Client side Certificate based authentication | &#10008; |
+| Client side Certificate based authentication | &#10004; |
 | Auto reconnect | &#10004; |
 | Websocket | &#10008; |
 | Multi-format support | &#10004; |
