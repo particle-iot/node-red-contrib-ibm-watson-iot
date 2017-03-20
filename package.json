@@ -8,7 +8,7 @@
     "dependencies": {
         "ibmiotf": "0.2.*"
     },
-    "version": "0.2.7",
+    "version": "0.2.8",
     "keywords": [
         "node-red",
         "bluemix",
@@ -35,6 +35,10 @@
         {
             "name": "jeffdare",
             "email": "jeffdare@in.ibm.com"
+        },
+        {
+            "name": "lokesh.h.k",
+            "email": "lokesh.h.k@in.ibm.com"
         }
     ]
 }
