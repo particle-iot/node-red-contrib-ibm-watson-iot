@@ -44,6 +44,15 @@
        <label for="node-config-input-cleansession" style="width: auto;">Use Clean Session</label>
     </div>
 
+    <div class="form-row" >
+       <input type="checkbox" id="node-config-input-usetls" style="margin-left: 10px; height: 1em;display: inline-block; width: auto; vertical-align: middle;">
+       <label for="node-config-input-usetls" style="width: auto;">Enable secure (SSL/TLS) connection</label>
+       <div id="node-config-row-tls" class="hide">
+           <label for="node-config-input-tls">TLS Config</label>
+           <input type="text" id="node-config-input-tls" style="width: 250px;">
+       </div>
+    </div>
+
     <div class="form-row">
         <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-config-input-name" placeholder="Name">
@@ -66,6 +75,8 @@
             devId: { value: "", required: true },
             keepalive: {value: 60, validate:RED.validators.number()},
             cleansession: {value: true},
+            tls: {type:"tls-config",required: false},
+            usetls: {value: false},
         },
         label: function() {
             return this.name||this.devType+"/"+this.devId||"Device";
@@ -78,13 +89,35 @@
                 this.keepalive = 60;
                 $("#node-config-input-keepalive").val(this.keepalive);
             }
-            
+
             if (typeof this.cleansession === 'undefined') {
                 this.cleansession = true;
                 $("#node-config-input-cleansession").prop("checked",true);
             }
 
+            if (typeof this.usetls === 'undefined') {
+               this.usetls = false;
+                $("#node-config-input-usetls").prop("checked",false);
+            }
+
+            function updateTLSOptions() {
+                if ($("#node-config-input-usetls").is(':checked')) {
+                    $("#node-config-row-tls").show();
+                } else {
+                    $("#node-config-row-tls").hide();
+                }
+            }
+            updateTLSOptions();
+            $("#node-config-input-usetls").on("click",function() {
+                updateTLSOptions();
+            });
+
         },
+        oneditsave: function() {
+            if ($("#node-config-input-usetls").is(':checked')) {
+                usetls = true;
+            }
+        }
     });
 
     RED.nodes.registerType('wiotp in',{
@@ -256,7 +289,7 @@
                     $("#node-form-row-qsDeviceId").hide();
 
                     $("#node-form-qos-div").show();
-                    
+
                 }
             });
             $("#node-form-row-qs input[type='radio'][value='"+this.qs+"']").attr('checked',true).change();
@@ -498,7 +531,7 @@
     <p>
        A <b>persistent session</b> can be requested by the client on connection establishment with the Watson IoT Platform using the <b>cleanSession</b> Flag.
        If the clean session is set to <b>true</b> then the client does not have a persistent session and all information are lost when the client disconnects for any reason.
-       When clean session is set to <b>false</b>, a persistent session is created and it will be preserved until the client requests a clean session again. 
+       When clean session is set to <b>false</b>, a persistent session is created and it will be preserved until the client requests a clean session again.
        If there is already a session available then it is used and queued messages will be delivered to the client if available. For more information, refer to Watson IoT Platform documentation.
     </p>
 </script>
@@ -553,7 +586,7 @@
     <p>
        A <b>persistent session</b> can be requested by the client on connection establishment with the Watson IoT Platform using the <b>cleanSession</b> Flag.
        If the clean session is set to <b>true</b> then the client does not have a persistent session and all information are lost when the client disconnects for any reason.
-       When clean session is set to <b>false</b>, a persistent session is created and it will be preserved until the client requests a clean session again. 
+       When clean session is set to <b>false</b>, a persistent session is created and it will be preserved until the client requests a clean session again.
        If there is already a session available then it is used and queued messages will be delivered to the client if available. For more information, refer to Watson IoT Platform documentation.
     </p>
     <p>In Registered Mode, the <code>server-name</code> property can be optionally used to specify the Watson IoT Platform messaging endpoint name. By default the value is <code>[organization id].messaging.internetofthings.ibmcloud.com</code> (Watson IoT Production server). The mqtt_host property of the Watson IoT service credential carries the value of the messaging endpoint name.
