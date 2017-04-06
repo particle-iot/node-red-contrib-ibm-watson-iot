@@ -17,16 +17,24 @@ npm install node-red-contrib-ibm-watson-iot
 Supported Features
 ------------------
 
-| Feature   |      Supported?      |
-|----------|:-------------:|
-| Device connectivity |  &#10004; |
-| Gateway connectivity |    &#10004; |
-| SSL/TLS | &#10004; |
-| Client side Certificate based authentication | &#10004; |
-| Auto reconnect | &#10004; |
-| Websocket | &#10008; |
-| Multi-format support | &#10004; |
-| Device Management | &#10008; |
+| Feature   |      Supported?      | Description |
+|----------|:-------------:|:-------------|
+| [Device connectivity](https://console.ng.bluemix.net/docs/services/IoT/applications/dev_nodered.html) |  &#10004; | Connect your device(s) to Watson IoT Platform with ease using this library. [Click here](https://developer.ibm.com/recipes/tutorials/getting-started-with-watson-iot-platform-using-node-red/) for detailed information on how devices can publish events and handle commands.|
+| [Gateway connectivity](https://console.ng.bluemix.net/docs/services/IoT/applications/dev_nodered.html) |    &#10004;   | Connect your gateway(s) to Watson IoT Platform with ease using this library. [Click here](https://developer.ibm.com/recipes/tutorials/getting-started-with-watson-iot-platform-using-node-red/) for detailed information on how gateways can publish events and handle commands for itself and for the attached devices. |
+| [SSL/TLS support](https://console.ng.bluemix.net/docs/services/IoT/reference/security/index.html) | &#10004; | By default, this library connects your devices, gateways and applications **securely** to Watson IoT Platform registered service. Ports 8883(default one) and 443 support secure connections using TLS with the MQTT and HTTP protocol. Also, note that the library uses port 1883(unsecured) to connect to the Quickstart service.|
+| [Client side Certificate based authentication](https://console.ng.bluemix.net/docs/services/IoT/reference/security/RM_security.html) | &#10004; | Default connections between devices and the platform use either the Certificates Only or Certificates with Authentication Tokens security levels.|
+| [Auto reconnect](https://github.com/eclipse/paho.mqtt.java/issues/9) | &#10004; | Enables device and gateway to automatically reconnect to Watson IoT Platform while they are in a disconnected state. [Further details here](https://console.ng.bluemix.net/docs/services/IoT/devices/libraries/nodejs.html#connecting_to_iotp). |
+| [Multi-format support](https://github.com/amprasanna/node-red-contrib-ibm-watson-iot)| &#10004; | The format of the event defaults to JSON, but can be set to another value or, if left blank, can be set by the msg.format property. |
+
+
+Supported Features
+------------------
+
+| Feature   |      Supported?      | Description |
+|----------|:-------------:|:-------------|
+| [Device Management](https://console.ng.bluemix.net/docs/services/IoT/devices/device_mgmt/index.html) | &#10008; | Currently not supported.|
+| Websocket | &#10008; | Currently not supported. |
+
 
 ----
 
