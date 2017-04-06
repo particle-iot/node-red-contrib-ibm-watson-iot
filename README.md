@@ -23,11 +23,11 @@ Supported Features
 | [Gateway connectivity](https://console.ng.bluemix.net/docs/services/IoT/applications/dev_nodered.html) |    &#10004;   | Connect your gateway(s) to Watson IoT Platform with ease using this library. [Click here](https://developer.ibm.com/recipes/tutorials/getting-started-with-watson-iot-platform-using-node-red/) for detailed information on how gateways can publish events and handle commands for itself and for the attached devices. |
 | [SSL/TLS support](https://console.ng.bluemix.net/docs/services/IoT/reference/security/index.html) | &#10004; | By default, this library connects your devices, gateways and applications **securely** to Watson IoT Platform registered service. Ports 8883(default one) and 443 support secure connections using TLS with the MQTT and HTTP protocol. Also, note that the library uses port 1883(unsecured) to connect to the Quickstart service.|
 | [Client side Certificate based authentication](https://console.ng.bluemix.net/docs/services/IoT/reference/security/RM_security.html) | &#10004; | Default connections between devices and the platform use either the Certificates Only or Certificates with Authentication Tokens security levels.|
-| [Auto reconnect](https://github.com/eclipse/paho.mqtt.java/issues/9) | &#10004; | Enables device and gateway to automatically reconnect to Watson IoT Platform while they are in a disconnected state. [Further details here](https://console.ng.bluemix.net/docs/services/IoT/devices/libraries/nodejs.html#connecting_to_iotp). |
+| [Auto reconnect](https://console.ng.bluemix.net/docs/services/IoT/devices/libraries/nodejs.html#connecting_to_iotp) | &#10004; | Enables device and gateway to automatically reconnect to Watson IoT Platform while they are in a disconnected state. [Further details here](https://console.ng.bluemix.net/docs/services/IoT/devices/libraries/nodejs.html#connecting_to_iotp). |
 | [Multi-format support](https://github.com/amprasanna/node-red-contrib-ibm-watson-iot)| &#10004; | The format of the event defaults to JSON, but can be set to another value or, if left blank, can be set by the msg.format property. |
 
 
-Supported Features
+Feature(s) that are expected to be supported, shortly
 ------------------
 
 | Feature   |      Supported?      | Description |
