@@ -25,16 +25,8 @@ Supported Features
 | [Client side Certificate based authentication](https://console.ng.bluemix.net/docs/services/IoT/reference/security/RM_security.html) | &#10004; | Default connections between devices and the platform use either the Certificates Only or Certificates with Authentication Tokens security levels.|
 | [Auto reconnect](https://console.ng.bluemix.net/docs/services/IoT/devices/libraries/nodejs.html#connecting_to_iotp) | &#10004; | Enables device and gateway to automatically reconnect to Watson IoT Platform while they are in a disconnected state. [Further details here](https://console.ng.bluemix.net/docs/services/IoT/devices/libraries/nodejs.html#connecting_to_iotp). |
 | [Multi-format support](https://github.com/amprasanna/node-red-contrib-ibm-watson-iot)| &#10004; | The format of the event defaults to JSON, but can be set to another value or, if left blank, can be set by the msg.format property. |
-
-
-Feature(s) that are expected to be supported, shortly
-------------------
-
-| Feature   |      Supported?      | Description |
-|----------|:-------------:|:-------------|
 | [Device Management](https://console.ng.bluemix.net/docs/services/IoT/devices/device_mgmt/index.html) | &#10008; | Currently not supported.|
 | Websocket | &#10008; | Currently not supported. |
-
 
 ----
 
