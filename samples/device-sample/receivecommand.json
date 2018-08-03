@@ -1,0 +1,36 @@
+[{
+	"id": "f5214b43.a89038",
+	"type": "wiotp-credentials",
+	"z": "736809f9.eac588",
+	"name": "pi",
+	"org": "pzkn7c",
+	"devType": "demotest",
+	"devId": "1qaz2wsx"
+},
+{
+	"id": "5a84e6d6.145b58",
+	"type": "wiotp in",
+	"z": "736809f9.eac588",
+	"authType": "d",
+	"deviceKey": "f5214b43.a89038",
+	"deviceType": "",
+	"deviceId": "",
+	"command": "+",
+	"commandType": "g",
+	"name": "cmd receiver",
+	"x": 119,
+	"y": 185.5,
+	"wires": [["1eece966.20a017"]]
+},
+{
+	"id": "1eece966.20a017",
+	"type": "debug",
+	"z": "736809f9.eac588",
+	"name": "",
+	"active": true,
+	"console": "false",
+	"complete": "command",
+	"x": 529,
+	"y": 204,
+	"wires": []
+}]

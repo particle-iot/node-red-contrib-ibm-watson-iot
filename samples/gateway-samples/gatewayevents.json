@@ -1,0 +1,73 @@
+[{
+	"id": "c59a4f7e.57fb7",
+	"type": "inject",
+	"z": "c6fcf83f.bad3b",
+	"name": "",
+	"topic": "",
+	"payload": "",
+	"payloadType": "date",
+	"repeat": "5",
+	"crontab": "",
+	"once": true,
+	"x": 171,
+	"y": 170,
+	"wires": [
+		["ae6d71b.561251"]
+	]
+}, {
+	"id": "ae6d71b.561251",
+	"type": "exec",
+	"z": "c6fcf83f.bad3b",
+	"command": "vcgencmd",
+	"addpay": false,
+	"append": "measure_temp",
+	"useSpawn": "",
+	"name": "getCPUtemp",
+	"x": 388,
+	"y": 248.5,
+	"wires": [
+		["e3932790.7458d", "a1a46099.2b059"],
+		[],
+		[]
+	]
+}, {
+	"id": "e3932790.7458d",
+	"type": "debug",
+	"z": "c6fcf83f.bad3b",
+	"name": "",
+	"active": true,
+	"console": "false",
+	"complete": "payload",
+	"x": 677,
+	"y": 168.5,
+	"wires": []
+}, {
+	"id": "a1a46099.2b059",
+	"type": "function",
+	"z": "c6fcf83f.bad3b",
+	"name": "msg.payload",
+	"func": "msg.payload = {\"d\":{\"temp\":msg.payload.replace(\"temp=\",\"\").replace(\"'C\\n\",\"\")}};\nreturn msg;",
+	"outputs": 1,
+	"noerr": 0,
+	"x": 438,
+	"y": 355,
+	"wires": [
+		["e3932790.7458d", "ac8c1457.8309a"]
+	]
+}, {
+	"id": "ac8c1457.8309a",
+	"type": "wiotp out",
+	"z": "c6fcf83f.bad3b",
+	"authType": "g",
+	"qs": "false",
+	"qsDeviceId": "",
+	"deviceKey": "",
+	"deviceType": "",
+	"deviceId": "",
+	"event": "event",
+	"format": "json",
+	"name": "gateway",
+	"x": 787,
+	"y": 294.5,
+	"wires": []
+}]

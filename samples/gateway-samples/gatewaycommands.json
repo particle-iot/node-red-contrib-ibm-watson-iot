@@ -1,0 +1,28 @@
+[{
+	"id": "5fca9c4f.0f998c",
+	"type": "wiotp in",
+	"z": "c6fcf83f.bad3b",
+	"authType": "g",
+	"deviceKey": "",
+	"deviceType": "",
+	"deviceId": "",
+	"command": "+",
+	"commandType": "g",
+	"name": "cmd receiver",
+	"x": 319,
+	"y": 182,
+	"wires": [
+		["cdd84cd2.6fd49"]
+	]
+}, {
+	"id": "cdd84cd2.6fd49",
+	"type": "debug",
+	"z": "c6fcf83f.bad3b",
+	"name": "",
+	"active": true,
+	"console": "false",
+	"complete": "true",
+	"x": 699,
+	"y": 200.5,
+	"wires": []
+}]
