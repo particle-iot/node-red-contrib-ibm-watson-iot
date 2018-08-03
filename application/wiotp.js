@@ -258,7 +258,7 @@ module.exports = function(RED) {
 
         this.deviceType = n.deviceType;
         this.deviceId = n.deviceId;
-        this.format = n.format || "json";
+        this.format = n.format;
         this.event = n.event;
 
         if (!isQuickstart) {
