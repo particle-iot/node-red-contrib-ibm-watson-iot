@@ -156,6 +156,9 @@ module.exports = function(RED) {
       this.config['client-ca'] = tlsNode.ca;
       this.config['client-cert'] = tlsNode.cert;
       this.config['client-key'] = tlsNode.key;
+      if (tlsNode.credentials && tlsNode.credentials.passphrase) {
+          this.config['client-key-passphrase'] = tlsNode.credentials.passphrase;
+      }
     }
   }
 
