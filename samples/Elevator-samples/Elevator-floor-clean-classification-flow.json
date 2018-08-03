@@ -1,0 +1,429 @@
+[{
+	"id": "adcf6cdf.d366b8",
+	"type": "ui_button",
+	"z": "6896f838.e75d98",
+	"name": "PiCam Image",
+	"group": "97efea7c.24d6d",
+	"order": 0,
+	"width": "0",
+	"height": "0",
+	"label": "Analyze Image from Pi Cam",
+	"color": "",
+	"icon": "",
+	"payload": "",
+	"payloadType": "str",
+	"topic": "",
+	"x": 97,
+	"y": 35.25,
+	"wires": [
+		["b4bef4ea.15712"]
+	]
+}, {
+	"id": "b4bef4ea.15712",
+	"type": "exec",
+	"z": "6896f838.e75d98",
+	"command": "raspistill -o /home/pi/picam_img.jpg -q 5",
+	"addpay": false,
+	"append": "",
+	"useSpawn": "",
+	"timer": "",
+	"name": "Click Floor Photo",
+	"x": 318,
+	"y": 38,
+	"wires": [
+		["1728f60c.a7c352"],
+		[],
+		[]
+	]
+}, {
+	"id": "5dd2430d.7561e4",
+	"type": "debug",
+	"z": "6896f838.e75d98",
+	"name": "Display Camera Status",
+	"active": true,
+	"console": "false",
+	"complete": "payload",
+	"x": 828,
+	"y": 41,
+	"wires": []
+}, {
+	"id": "1728f60c.a7c352",
+	"type": "template",
+	"z": "6896f838.e75d98",
+	"name": "Status of Capture",
+	"field": "payload",
+	"fieldType": "msg",
+	"format": "handlebars",
+	"syntax": "mustache",
+	"template": "Photo Clicked",
+	"x": 554,
+	"y": 40.5,
+	"wires": [
+		["5dd2430d.7561e4", "4572fa98.3b301c"]
+	]
+}, {
+	"id": "51ceefad.feec6",
+	"type": "function",
+	"z": "6896f838.e75d98",
+	"name": "VR Inputs",
+	"func": "global.set(\"imgData\",msg.payload); \nmsg.headers = { \"Content - Type \":\"image / jpeg \"};\nmsg.params = {classifier_ids:[\"dirty_1964431456\"],\n owners:[\"me\",\"IBM\"],\n threshold: 0.0,\n};\nreturn msg;",
+	"outputs": 1,
+	"noerr": 0,
+	"x": 545,
+	"y": 113,
+	"wires": [
+		["aaff9f7d.e3c0d8", "36c4fb95.bc9ad4", "339933c5.a81964"]
+	]
+}, {
+	"id": "535fd626.16835",
+	"type": "file in",
+	"z": "6896f838.e75d98",
+	"name": "Read Image",
+	"filename": "/home/pi/picam_img.jpg",
+	"format": "",
+	"x": 341,
+	"y": 149,
+	"wires": [
+		["51ceefad.feec6", "a86175be.7c37d"]
+	]
+}, {
+	"id": "dc0c7ebb.a7874",
+	"type": "debug",
+	"z": "6896f838.e75d98",
+	"name": "Read Image Buffer",
+	"active": true,
+	"console": "false",
+	"complete": "payload",
+	"x": 922.22216796875,
+	"y": 113.111083984375,
+	"wires": []
+}, {
+	"id": "aaff9f7d.e3c0d8",
+	"type": "visual-recognition-v3",
+	"z": "6896f838.e75d98",
+	"name": "Classify an Image",
+	"apikey": "9ad1455f3be7b99134760eb850de61252f6172d7",
+	"image-feature": "classifyImage",
+	"lang": "en",
+	"x": 468,
+	"y": 248,
+	"wires": [
+		["ac85ddfc.92725"]
+	]
+}, {
+	"id": "4572fa98.3b301c",
+	"type": "delay",
+	"z": "6896f838.e75d98",
+	"name": "Trigger Analysis",
+	"pauseType": "delay",
+	"timeout": "2",
+	"timeoutUnits": "seconds",
+	"rate": "1",
+	"rateUnits": "second",
+	"randomFirst": "1",
+	"randomLast": "5",
+	"randomUnits": "seconds",
+	"drop": false,
+	"x": 127,
+	"y": 148,
+	"wires": [
+		["535fd626.16835"]
+	]
+}, {
+	"id": "ac85ddfc.92725",
+	"type": "function",
+	"z": "6896f838.e75d98",
+	"name": "Retrieve VR Score",
+	"func": "var score = 0;\nif(msg.result.images[0].classifiers[0]){\n var classes = msg.result.images[0].classifiers[0].classes; \n //if(classes[0].score >= 0.5) \n score=classes[0].score;\n //else\n //score=0;\n}\nmsg.payload = score;\nreturn msg;",
+	"outputs": "1",
+	"noerr": 0,
+	"x": 681.5,
+	"y": 249,
+	"wires": [
+		["c013919.fcdcdf", "6d610a49.7ec84c", "dbe51eb9.358108"]
+	]
+}, {
+	"id": "c013919.fcdcdf",
+	"type": "debug",
+	"z": "6896f838.e75d98",
+	"name": "VR Score",
+	"active": true,
+	"console": "false",
+	"complete": "payload",
+	"x": 876.5,
+	"y": 216.75,
+	"wires": []
+}, {
+	"id": "8ade581f.14e92",
+	"type": "ui_template",
+	"z": "6896f838.e75d98",
+	"group": "2a2778a7.d8e7a",
+	"name": "PICam Image",
+	"order": 0,
+	"width": "6",
+	"height": "6",
+	"format": "<img width=\"32\" height=\"32\" alt=\"image\" src=\"data:image/jpg;base64,{{msg.payload}}\"/>",
+	"storeOutMessages": false,
+	"fwdInMessages": false,
+	"x": 309.5,
+	"y": 195.5,
+	"wires": [
+		[]
+	]
+}, {
+	"id": "6d610a49.7ec84c",
+	"type": "ui_gauge",
+	"z": "6896f838.e75d98",
+	"name": "",
+	"group": "329cd807.8f5438",
+	"order": 0,
+	"width": "3",
+	"height": "3",
+	"gtype": "gage",
+	"title": "",
+	"label": "Score Gauge",
+	"format": "{{value}}",
+	"min": 0,
+	"max": "1",
+	"colors": ["#00b500", "#e6e600", "#ca3838"],
+	"x": 927.5,
+	"y": 260.5,
+	"wires": []
+}, {
+	"id": "dbe51eb9.358108",
+	"type": "wiotp out",
+	"z": "6896f838.e75d98",
+	"authType": "d",
+	"qs": "false",
+	"qsDeviceId": "",
+	"deviceKey": "aea9270e.4e7be8",
+	"deviceType": "",
+	"deviceId": "",
+	"event": "event",
+	"format": "json",
+	"name": "Send Score to WIOTP",
+	"x": 934.5,
+	"y": 308.5,
+	"wires": []
+}, {
+	"id": "a86175be.7c37d",
+	"type": "base64",
+	"z": "6896f838.e75d98",
+	"name": "",
+	"x": 120.5,
+	"y": 194.75,
+	"wires": [
+		["8ade581f.14e92"]
+	]
+}, {
+	"id": "797e3fce.c44f78",
+	"type": "ui_button",
+	"z": "6896f838.e75d98",
+	"name": "DirtyImage",
+	"group": "97efea7c.24d6d",
+	"order": 0,
+	"width": 0,
+	"height": 0,
+	"label": "Analyze Dirty Image",
+	"color": "",
+	"icon": "",
+	"payload": "/home/pi/img-10.jpg",
+	"payloadType": "str",
+	"topic": "",
+	"x": 91.5,
+	"y": 83.25,
+	"wires": [
+		["5b56035e.780f74"]
+	]
+}, {
+	"id": "5b56035e.780f74",
+	"type": "file in",
+	"z": "6896f838.e75d98",
+	"name": "Read Dirty Image",
+	"filename": "/home/pi/img-10.jpg",
+	"format": "",
+	"x": 305.5,
+	"y": 87.25,
+	"wires": [
+		["a86175be.7c37d", "51ceefad.feec6"]
+	]
+}, {
+	"id": "df5d2375.d06ad",
+	"type": "ui_button",
+	"z": "6896f838.e75d98",
+	"name": "SemiDirtyImage",
+	"group": "97efea7c.24d6d",
+	"order": 0,
+	"width": 0,
+	"height": 0,
+	"label": "Analyze Semi Dirty Image",
+	"color": "",
+	"icon": "",
+	"payload": "/home/pi/img-4.jpg",
+	"payloadType": "str",
+	"topic": "",
+	"x": 94.5,
+	"y": 302.25,
+	"wires": [
+		["926d5162.c1bcb8"]
+	]
+}, {
+	"id": "926d5162.c1bcb8",
+	"type": "file in",
+	"z": "6896f838.e75d98",
+	"name": "Read Semi Dirty Image",
+	"filename": "/home/pi/img-4.jpg",
+	"format": "",
+	"x": 316.5,
+	"y": 302.25,
+	"wires": [
+		["a86175be.7c37d", "51ceefad.feec6"]
+	]
+}, {
+	"id": "4df75ab1.94050c",
+	"type": "file in",
+	"z": "6896f838.e75d98",
+	"name": "Read Clean Image",
+	"filename": "/home/pi/img-1.jpg",
+	"format": "",
+	"x": 307.5,
+	"y": 372.25,
+	"wires": [
+		["a86175be.7c37d", "51ceefad.feec6"]
+	]
+}, {
+	"id": "e824fa89.d20fe",
+	"type": "ui_button",
+	"z": "6896f838.e75d98",
+	"name": "Clean Image",
+	"group": "97efea7c.24d6d",
+	"order": 0,
+	"width": 0,
+	"height": 0,
+	"label": "Analyze Clean Image",
+	"color": "",
+	"icon": "",
+	"payload": "/home/pi/img-01.jpg",
+	"payloadType": "str",
+	"topic": "",
+	"x": 88.5,
+	"y": 375.25,
+	"wires": [
+		["4df75ab1.94050c"]
+	]
+}, {
+	"id": "8bb7bd92.8099c",
+	"type": "function",
+	"z": "6896f838.e75d98",
+	"name": "imgData",
+	"func": "\nmsg.payload.attachments = {\n \"content_type\":\"image/jpeg\",\n \"data\":global.get(\"imgData\")\n };\n \n \n\nreturn msg;",
+	"outputs": 1,
+	"noerr": 0,
+	"x": 847.83349609375,
+	"y": 171.63885498046875,
+	"wires": [
+		["bd0562e9.1e62e"]
+	]
+}, {
+	"id": "bd0562e9.1e62e",
+	"type": "cloudant out",
+	"z": "6896f838.e75d98",
+	"name": "Store Img",
+	"cloudant": "e7dbf5c0.7328d8",
+	"database": "elevator_floor_images",
+	"service": "_ext_",
+	"payonly": true,
+	"operation": "insert",
+	"x": 1001.5001220703125,
+	"y": 171.4722900390625,
+	"wires": []
+}, {
+	"id": "36c4fb95.bc9ad4",
+	"type": "function",
+	"z": "6896f838.e75d98",
+	"name": "Get ImgData",
+	"func": "msg.payload = global.get(\"imgData\");\nreturn msg;",
+	"outputs": 1,
+	"noerr": 0,
+	"x": 721.3333740234375,
+	"y": 112.83331298828125,
+	"wires": [
+		["dc0c7ebb.a7874"]
+	]
+}, {
+	"id": "339933c5.a81964",
+	"type": "function",
+	"z": "6896f838.e75d98",
+	"name": "Search ID",
+	"func": "msg.payload = \"latest_img\";\nreturn msg;",
+	"outputs": 1,
+	"noerr": 0,
+	"x": 548.5555419921875,
+	"y": 173.9444580078125,
+	"wires": [
+		["a7f39692.94ca3"]
+	]
+}, {
+	"id": "a7f39692.94ca3",
+	"type": "cloudant in",
+	"z": "6896f838.e75d98",
+	"name": "Search",
+	"cloudant": "e7dbf5c0.7328d8",
+	"database": "elevator_floor_images",
+	"service": "_ext_",
+	"search": "_id_",
+	"design": "",
+	"index": "",
+	"x": 692.666748046875,
+	"y": 172.05551147460938,
+	"wires": [
+		["8bb7bd92.8099c"]
+	]
+}, {
+	"id": "97efea7c.24d6d",
+	"type": "ui_group",
+	"z": "",
+	"name": "Analyze Images",
+	"tab": "3582568.afa04aa",
+	"order": 1,
+	"disp": true,
+	"width": "6"
+}, {
+	"id": "2a2778a7.d8e7a",
+	"type": "ui_group",
+	"z": "6896f838.e75d98",
+	"name": "Image to VR Service for Analysis",
+	"tab": "3582568.afa04aa",
+	"order": 2,
+	"disp": true,
+	"width": "6"
+}, {
+	"id": "329cd807.8f5438",
+	"type": "ui_group",
+	"z": "",
+	"name": "VR Score",
+	"tab": "3582568.afa04aa",
+	"order": 3,
+	"disp": true,
+	"width": "3"
+}, {
+	"id": "aea9270e.4e7be8",
+	"type": "wiotp-credentials",
+	"z": "6896f838.e75d98",
+	"name": "DD",
+	"org": "shscbw",
+	"devType": "ElevatorDevices",
+	"devId": "piCam-3"
+}, {
+	"id": "e7dbf5c0.7328d8",
+	"type": "cloudant",
+	"z": "6896f838.e75d98",
+	"host": "4b2f5039-1009-4eac-98b9-1c69c5764560-bluemix.cloudant.com",
+	"name": "Cloudant Service"
+}, {
+	"id": "3582568.afa04aa",
+	"type": "ui_tab",
+	"z": "6896f838.e75d98",
+	"name": "Elevator Floor Analysis",
+	"icon": "dashboard"
+}]
